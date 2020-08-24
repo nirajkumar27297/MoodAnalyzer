@@ -11,6 +11,12 @@ class MoodAnalyzerTestCases extends FunSuite {
       objMoodAnalyzer.analyzeMood("I am in SAD mood") == "SAD"
     }
   }
+  test("MoodAnalyzerTestHappy") {
+    val objMoodAnalyzer = new MoodAnalyzer()
+    assert {
+      objMoodAnalyzer.analyzeMood("I am in ANY mood") == "HAPPY"
+    }
+  }
 }
 
 
