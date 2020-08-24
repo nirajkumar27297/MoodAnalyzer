@@ -1,15 +1,17 @@
 package MoodAnalyzerProject
 
-class MoodAnalyzer {
+class MoodAnalyzer(message:String) {
+  val this.message:String = message
 
-  def analyzeMood(message: String):String = {
-    if(message.contains("SAD")){
+  def this(){
+    this("SAD")
+  }
+  def analyzeMood():String = {
+    if(this.message.contains("SAD")){
       return "SAD"
     }
     else {
       return "HAPPY"
     }
-
   }
-
 }
