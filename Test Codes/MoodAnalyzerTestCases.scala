@@ -5,18 +5,26 @@ import org.scalatest.FunSuite
 class MoodAnalyzerTestCases extends FunSuite {
 
 
-  test("MoodAnlyzerTest") {
-    val objMoodAnalyzer = new MoodAnalyzer()
+  test("MoodAnlyzerTest_InputIs_InSadMood_ReturnSAD") {
+    val objMoodAnalyzer = new MoodAnalyzer("I am in SAD mood")
     assert {
-      objMoodAnalyzer.analyzeMood("I am in SAD mood") == "SAD"
+      objMoodAnalyzer.analyzeMood() == "SAD"
     }
   }
-  test("MoodAnalyzerTestHappy") {
-    val objMoodAnalyzer = new MoodAnalyzer()
+  test("MoodAnalyzerTest_InputIs_InAnyMood_ReturnHappy") {
+    val objMoodAnalyzer = new MoodAnalyzer("I am in ANY mood")
     assert {
-      objMoodAnalyzer.analyzeMood("I am in ANY mood") == "HAPPY"
+      objMoodAnalyzer.analyzeMood() == "HAPPY"
     }
   }
+
+  test("MoodAnalyzerTest_InputIs_Empty_ReturnException") {
+    val objMoodAnalyzer = new MoodAnalyzer(null)
+    val thrown = intercept[Exception] {
+      objMoodAnalyzer.analyzeMood()
+    }
+    assert(thrown.getMessage == "HAPPY")
+    }
 }
 
 
