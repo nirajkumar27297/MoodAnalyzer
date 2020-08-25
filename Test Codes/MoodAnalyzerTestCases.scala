@@ -18,13 +18,14 @@ class MoodAnalyzerTestCases extends FunSuite {
     }
   }
 
-  test("MoodAnalyzerTest_InputIs_Empty_ReturnException") {
+  test("MoodAnalyzerTest_InputIs_Null_ReturnException") {
     val objMoodAnalyzer = new MoodAnalyzer(null)
-    val thrown = intercept[Exception] {
+    val thrown = intercept[NullPointerException] {
       objMoodAnalyzer.analyzeMood()
     }
     assert(thrown.getMessage == "HAPPY")
     }
+
 }
 
 

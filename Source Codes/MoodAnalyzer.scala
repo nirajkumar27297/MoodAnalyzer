@@ -7,10 +7,11 @@ class MoodAnalyzer(message:String) {
     this("SAD")
   }
   def analyzeMood():String = {
+
     try {
-      if (this.message == null) {
-        throw new Exception("HAPPY")
-        }
+      if(this.message == null){
+        throw new NullPointerException("HAPPY")
+      }
       if (this.message.contains("SAD")) {
         return "SAD"
       }
@@ -19,9 +20,17 @@ class MoodAnalyzer(message:String) {
         return "HAPPY"
       }
     }
+    catch {
+      case ex: NullPointerException => throw ex
+    }
   }
-
 }
+
+
+
+
+
+
 
 
 
