@@ -32,7 +32,18 @@ class MoodAnalyzerTestCases extends FunSuite {
     }
     assert(thrown.getMessage == CustomException.emptyString.toString)
   }
+  test("MoodAnalyzerTest_ObjectsAreEqualUsingDefaultConstructor_ReturnTrue"){
+    val firstObject = MoodAnalyzer.createObject()
+    val secondObject = MoodAnalyzer.createObject()
+    assert(firstObject.isEqual(secondObject) == true)
+  }
+  test("MoodAnalyzerTest_ObjectsAreEqualUsingParametrizedConstructor_ReturnTrue"){
+    val firstObject = MoodAnalyzer.createObject("SAD")
+    val secondObject = MoodAnalyzer.createObject("SAD")
+    assert(firstObject.isEqual(secondObject) == true)
+  }
 }
+
 
 
 

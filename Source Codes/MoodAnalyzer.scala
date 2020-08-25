@@ -2,15 +2,19 @@ package MoodAnalyzerProject
 
 class MoodAnalysisException(msg:CustomException.Value) extends Exception(msg.toString){}
 
-class MoodAnalyzer(message:String) {
-  val this.message:String = message
+class MoodAnalyzer(messageParameter:String) {
+  val message: String = messageParameter
 
-  def this(){
+  def this() {
     this("SAD")
   }
-  def analyzeMood():String = {
+
+  def isEqual(secondObject: Any) =
+    secondObject.isInstanceOf[MoodAnalyzer] && secondObject.asInstanceOf[MoodAnalyzer].message == message
+
+  def analyzeMood(): String = {
     try {
-      if(this.message.length == 0 ){
+      if (this.message.length == 0) {
         throw new MoodAnalysisException(CustomException.emptyString)
       }
       else if (this.message.contains("SAD")) {
@@ -21,8 +25,12 @@ class MoodAnalyzer(message:String) {
       }
     }
     catch {
-      case ex:NullPointerException => throw new MoodAnalysisException(CustomException.nullString)
+      case ex: NullPointerException => throw new MoodAnalysisException(CustomException.nullString)
     }
 
   }
+}
+object MoodAnalyzer {
+  def createObject() = new MoodAnalyzer()
+  def createObject(message:String) = new MoodAnalyzer(message)
 }
