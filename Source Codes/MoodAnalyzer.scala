@@ -30,35 +30,3 @@ class MoodAnalyzer(messageParameter: String) {
   }
 }
 
-object MoodAnalyzerFactory {
-  def createObject(className: String, message: String = ""): MoodAnalyzer = {
-    try {
-      if (className.equals("MoodAnalyzer") && message.length == 0) {
-        new MoodAnalyzer()
-      }
-      else if (className.equals("MoodAnalyzer") && message.length > 0) {
-        new MoodAnalyzer(message)
-      }
-      else {
-        throw new MoodAnalysisException(CustomException.wrongClassName)
-      }
-    }
-  }
-
-  def checkConstructorDefault(Obj: Any): Unit = {
-    val className = Obj.getClass
-    var flag = 0
-    try {
-      if (Obj.getClass.toString.contains("MoodAnalyzer")) {
-        val methods = className.getDeclaredConstructors
-        for (method <- methods; if method.getName.contains("MoodAnalyzer") && method.getParameterCount == 0) {
-          flag = 1
-          method.newInstance()
-        }
-      }
-      if (flag == 0) {
-        throw new MoodAnalysisException(CustomException.noSuchMethod)
-      }
-    }
-  }
-}

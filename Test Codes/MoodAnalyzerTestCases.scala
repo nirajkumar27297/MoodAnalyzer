@@ -44,25 +44,20 @@ class MoodAnalyzerTestCases extends FunSuite {
     }
     assert(thrown.getMessage == CustomException.wrongClassName.toString)
   }
-  test("MoodAnalyzerTest_PassingWrongConstructor_ReturnException") {
+  test("MoodAnalyzerTest_PassingWrongConstructorParameter_ReturnException") {
     val thrown = intercept[MoodAnalysisException] {
-    MoodAnalyzerFactory.checkConstructorDefault("moodAnalyzer")
+    MoodAnalyzerFactory.createObject("MoodAnalyzer",5)
     }
     assert(thrown.getMessage == CustomException.noSuchMethod.toString)
   }
-  test("MoodAnalyzerTest_ObjectsAreEqualUsingParametrizedConstructor_ReturnTrue"){
-    val firstObject = MoodAnalyzerFactory.createObject("MoodAnalyzer","HAPPY")
-    val secondObject = MoodAnalyzerFactory.createObject("MoodAnalyzer","HAPPY")
-    assert(firstObject.isEqual(secondObject) == true)
+  test("MoodAnalyzerTest_PassingDefaultConstructorParameter_ReturnMoodAnalyzerObject") {
+      val firstObject = MoodAnalyzerFactory.createObject("MoodAnalyzer")
+      assert(firstObject.isInstanceOf[MoodAnalyzer] == true)
   }
-  test("MoodAnalyzerTest_PassingWrongClassNameForParamaterizedConstructor_ReturnException"){
-
-    val thrown = intercept[MoodAnalysisException] {
-      val firstObject = MoodAnalyzerFactory.createObject("moodAnalyzer","Happy")
-    }
-    assert(thrown.getMessage == CustomException.wrongClassName.toString)
+  test("MoodAnalyzerTest_PassingParameterizedConstructor_ReturnMoodAnalyzerObject") {
+    val firstObject = MoodAnalyzerFactory.createObject("MoodAnalyzer","Hello")
+    assert(firstObject.isInstanceOf[MoodAnalyzer] == true)
   }
-
 
 }
 
