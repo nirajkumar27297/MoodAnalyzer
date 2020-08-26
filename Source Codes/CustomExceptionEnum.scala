@@ -7,4 +7,5 @@ object CustomException extends Enumeration {
   val emptyString = Value("Length should be greater than zero")
   val wrongClassName = Value("No Such Class Error")
   val noSuchMethod = Value("No Such Method Error")
+  val noSuchField = Value("No Such Field Error")
 }

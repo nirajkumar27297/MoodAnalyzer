@@ -1,6 +1,7 @@
 package MoodAnalyzerProject
 
 object MoodAnalyzerReflection {
+  var className:String = "MoodAnalyzerProject.MoodAnalyzer"
   def createObject(className: String = "MoodAnalyzer", message:Any = None): MoodAnalyzer = {
     createObjectHelper(className,Some(message))
   }
@@ -9,9 +10,9 @@ object MoodAnalyzerReflection {
       if (className.equals("MoodAnalyzer")) {
         message match {
           case Some(None) =>
-            return checkConstructorDefault("MoodAnalyzerProject.MoodAnalyzer")
+            return checkConstructorDefault()
           case Some(msg) =>
-            return checkConstructorParameterized("MoodAnalyzerProject.MoodAnalyzer",msg)
+            return checkConstructorParameterized(msg)
         }
       }
       else {
@@ -20,7 +21,7 @@ object MoodAnalyzerReflection {
     }
   }
 
-  def checkConstructorDefault(className: String): MoodAnalyzer = {
+  def checkConstructorDefault(): MoodAnalyzer = {
     try {
       val methods = Class.forName(className).getConstructor()
       val obj = methods.newInstance()
@@ -31,7 +32,7 @@ object MoodAnalyzerReflection {
     }
   }
 
-  def checkConstructorParameterized(className:String,msg:Any): MoodAnalyzer = {
+  def checkConstructorParameterized(msg:Any): MoodAnalyzer = {
     val msgClass = msg.getClass
     try {
       val methods = Class.forName(className).getConstructor(Class.forName(msgClass.getName))
@@ -39,19 +40,34 @@ object MoodAnalyzerReflection {
       return obj.asInstanceOf[MoodAnalyzer]
     }
     catch {
-      case ex:Exception => throw new MoodAnalysisException(CustomException.noSuchMethod)
+      case ex:NoSuchMethodException => throw new MoodAnalysisException(CustomException.noSuchMethod)
     }
   }
 
-  def checkMethodValidity(methodName:String ="analyzeMood",msg:Any = None): AnyRef ={
+  def checkMethodValidity(methodName:String = "analyzeMood",msg:Any = None): AnyRef ={
     try {
-      val obj = MoodAnalyzerFactory.createObject(message = msg)
-      val methods = obj.getClass.getDeclaredMethods
+      val obj = createObject(message = msg)
       val method = obj.getClass().getMethod(methodName)
       return method.invoke(obj)
     }
     catch {
-      case ex:Exception => throw new MoodAnalysisException(CustomException.noSuchMethod)
+      case ex:NoSuchMethodException => throw new MoodAnalysisException(CustomException.noSuchMethod)
+    }
+  }
+
+  def setField(methodName:String = "analyzeMood",fieldName:String = "message",fieldValue:String = "HAPPY"): AnyRef = {
+    try {
+      checkMethodValidity(methodName)
+      val field = Class.forName(className).getDeclaredField(fieldName)
+      field.setAccessible(true)
+      val obj = createObject(message = fieldValue)
+      field.set(obj,fieldValue)
+      val method = Class.forName(className).getMethod("analyzeMood")
+      return method.invoke(obj)
+    }
+    catch {
+      case ex: NoSuchFieldException => throw new MoodAnalysisException(CustomException.noSuchField)
+      case ex: NullPointerException => throw new MoodAnalysisException(CustomException.nullString)
     }
   }
 }
