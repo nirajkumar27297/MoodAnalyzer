@@ -39,7 +39,7 @@ object MoodAnalyzerFactory {
         return obj.asInstanceOf[MoodAnalyzer]
       }
     catch {
-      case ex:Exception => throw new MoodAnalysisException(CustomException.noSuchMethod)
+      case ex:NoSuchMethodException => throw new MoodAnalysisException(CustomException.noSuchMethod)
     }
     }
 
@@ -51,7 +51,7 @@ object MoodAnalyzerFactory {
       return method.invoke(obj)
     }
     catch {
-      case ex:Exception => throw new MoodAnalysisException(CustomException.noSuchMethod)
+      case ex:NoSuchMethodException => throw new MoodAnalysisException(CustomException.noSuchMethod)
     }
   }
 }

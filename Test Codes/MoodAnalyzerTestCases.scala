@@ -5,7 +5,7 @@ import org.scalatest.FunSuite
 
 class MoodAnalyzerTestCases extends FunSuite {
 
-  test("MoodAnlyzerTest_InputIs_InSadMood_ReturnSAD") {
+  test("MoodAnalyzerTest_InputIs_InSadMood_ReturnSAD") {
     val objMoodAnalyzer = new MoodAnalyzer("I am in SAD mood")
     assert {
       objMoodAnalyzer.analyzeMood() == "SAD"
@@ -71,6 +71,22 @@ class MoodAnalyzerTestCases extends FunSuite {
   test("MoodAnalyzerTest_PassingRightMethodName_ReturnHAPPY") {
       val result = MoodAnalyzerReflection.checkMethodValidity("analyzeMood","HAPPY")
       assert(result == "HAPPY")
+  }
+  test("MoodAnalyzerTest_InputMethodNameAndFieldNameAndFieldValue_SetFieldValueHAPPY_ReturnHAPPY") {
+    val result = MoodAnalyzerReflection.setField("analyzeMood","message","HAPPY")
+    assert(result == "HAPPY")
+  }
+  test("MoodAnalyzerTest_InputMethodNameAndWrongFieldNameAndFieldValue_ReturnException") {
+    val thrown = intercept[MoodAnalysisException] {
+      MoodAnalyzerReflection.setField("analyzeMood", "msg", "HAPPY")
+    }
+    assert(thrown.getMessage == CustomException.noSuchField.toString)
+  }
+  test("MoodAnalyzerTest_InputMethodNameAndFieldNameAndFieldValueAsNull_ReturnException") {
+    val thrown = intercept[MoodAnalysisException] {
+      MoodAnalyzerReflection.setField("analyzeMood", "message", null)
+    }
+    assert(thrown.getMessage == CustomException.nullString.toString)
   }
 
 
