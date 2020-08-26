@@ -44,7 +44,6 @@ object MoodAnalyzerFactory {
         throw new MoodAnalysisException(CustomException.wrongClassName)
       }
     }
-
   }
 
   def checkConstructorDefault(Obj: Any): Unit = {
@@ -52,8 +51,6 @@ object MoodAnalyzerFactory {
     var flag = 0
     try {
       if (Obj.getClass.toString.contains("MoodAnalyzer")) {
-        //if(className.getDeclaredMethod("message").getParameterCount
-        //println(methods)
         val methods = className.getDeclaredConstructors
         for (method <- methods; if method.getName.contains("MoodAnalyzer") && method.getParameterCount == 0) {
           flag = 1
