@@ -1,5 +1,5 @@
 package moodAnalyzerTest
-import MoodAnalyzerProject.{CustomException, MoodAnalysisException, MoodAnalyzer, MoodAnalyzerFactory}
+import MoodAnalyzerProject.{CustomException, MoodAnalysisException, MoodAnalyzer, MoodAnalyzerFactory, MoodAnalyzerReflection}
 import org.scalatest.FunSuite
 
 
@@ -58,6 +58,21 @@ class MoodAnalyzerTestCases extends FunSuite {
     val firstObject = MoodAnalyzerFactory.createObject("MoodAnalyzer","Hello")
     assert(firstObject.isInstanceOf[MoodAnalyzer] == true)
   }
+  test("MoodAnalyzerTest_ImproperMethod_ReturnException") {
+    val firstObject = MoodAnalyzerFactory.createObject("MoodAnalyzer","Hello")
+    assert(firstObject.isInstanceOf[MoodAnalyzer] == true)
+  }
+  test("MoodAnalyzerTest_PassingWrongMethodName_ReturnException") {
+    val thrown = intercept[MoodAnalysisException] {
+      MoodAnalyzerReflection.checkMethodValidity("MoodAnalyzer","HAPPY")
+    }
+    assert(thrown.getMessage == CustomException.noSuchMethod.toString)
+  }
+  test("MoodAnalyzerTest_PassingRightMethodName_ReturnHAPPY") {
+      val result = MoodAnalyzerReflection.checkMethodValidity("analyzeMood","HAPPY")
+      assert(result == "HAPPY")
+  }
+
 
 }
 

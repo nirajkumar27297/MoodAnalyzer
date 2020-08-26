@@ -1,8 +1,8 @@
 package MoodAnalyzerProject
 
-object MoodAnalyzerFactory {
+object MoodAnalyzerReflection {
   def createObject(className: String = "MoodAnalyzer", message:Any = None): MoodAnalyzer = {
-     createObjectHelper(className,Some(message))
+    createObjectHelper(className,Some(message))
   }
   def createObjectHelper(className:String, message: Option[Any]): MoodAnalyzer = {
     try {
@@ -34,14 +34,14 @@ object MoodAnalyzerFactory {
   def checkConstructorParameterized(className:String,msg:Any): MoodAnalyzer = {
     val msgClass = msg.getClass
     try {
-        val methods = Class.forName(className).getConstructor(Class.forName(msgClass.getName))
-        val obj = methods.newInstance(msg.asInstanceOf[String])
-        return obj.asInstanceOf[MoodAnalyzer]
-      }
+      val methods = Class.forName(className).getConstructor(Class.forName(msgClass.getName))
+      val obj = methods.newInstance(msg.asInstanceOf[String])
+      return obj.asInstanceOf[MoodAnalyzer]
+    }
     catch {
       case ex:Exception => throw new MoodAnalysisException(CustomException.noSuchMethod)
     }
-    }
+  }
 
   def checkMethodValidity(methodName:String ="analyzeMood",msg:Any = None): AnyRef ={
     try {
