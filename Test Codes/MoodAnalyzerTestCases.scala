@@ -1,5 +1,5 @@
 package moodAnalyzerTest
-import MoodAnalyzerProject.{CustomException, MoodAnalysisException, MoodAnalyzer}
+import MoodAnalyzerProject.{CustomException, MoodAnalysisException, MoodAnalyzer, MoodAnalyzerFactory}
 import org.scalatest.FunSuite
 
 
@@ -33,15 +33,29 @@ class MoodAnalyzerTestCases extends FunSuite {
     assert(thrown.getMessage == CustomException.emptyString.toString)
   }
   test("MoodAnalyzerTest_ObjectsAreEqualUsingDefaultConstructor_ReturnTrue"){
-    val firstObject = MoodAnalyzer.createObject()
-    val secondObject = MoodAnalyzer.createObject()
+    val firstObject = MoodAnalyzerFactory.createObject("MoodAnalyzer")
+    val secondObject = MoodAnalyzerFactory.createObject("MoodAnalyzer")
     assert(firstObject.isEqual(secondObject) == true)
   }
   test("MoodAnalyzerTest_ObjectsAreEqualUsingParametrizedConstructor_ReturnTrue"){
-    val firstObject = MoodAnalyzer.createObject("SAD")
-    val secondObject = MoodAnalyzer.createObject("SAD")
+    val firstObject = MoodAnalyzerFactory.createObject("MoodAnalyzer")
+    val secondObject = MoodAnalyzerFactory.createObject("MoodAnalyzer")
     assert(firstObject.isEqual(secondObject) == true)
   }
+  test("MoodAnalyzerTest_PassingWrongClassName_ReturnException"){
+
+    val thrown = intercept[MoodAnalysisException] {
+      val firstObject = MoodAnalyzerFactory.createObject("moodAnalyzer")
+    }
+    assert(thrown.getMessage == CustomException.wrongClassName.toString)
+  }
+  test("MoodAnalyzerTest_PassingWrongConstructor_ReturnException") {
+    val thrown = intercept[MoodAnalysisException] {
+    MoodAnalyzerFactory.checkConstructorDefault("moodAnalyzer")
+    }
+    assert(thrown.getMessage == CustomException.noSuchMethod.toString)
+  }
+
 }
 
 
