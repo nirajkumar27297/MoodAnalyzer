@@ -55,6 +55,13 @@ class MoodAnalyzerTestCases extends FunSuite {
     val secondObject = MoodAnalyzerFactory.createObject("MoodAnalyzer","HAPPY")
     assert(firstObject.isEqual(secondObject) == true)
   }
+  test("MoodAnalyzerTest_PassingWrongClassNameForParamaterizedConstructor_ReturnException"){
+
+    val thrown = intercept[MoodAnalysisException] {
+      val firstObject = MoodAnalyzerFactory.createObject("moodAnalyzer","Happy")
+    }
+    assert(thrown.getMessage == CustomException.wrongClassName.toString)
+  }
 
 
 }

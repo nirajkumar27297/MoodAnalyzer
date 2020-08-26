@@ -27,7 +27,6 @@ class MoodAnalyzer(messageParameter: String) {
     catch {
       case ex: NullPointerException => throw new MoodAnalysisException(CustomException.nullString)
     }
-
   }
 }
 
