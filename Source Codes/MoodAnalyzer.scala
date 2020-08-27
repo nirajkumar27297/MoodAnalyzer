@@ -2,14 +2,14 @@ package MoodAnalyzerProject
 class MoodAnalysisException(msg:CustomException.Value) extends Exception(msg.toString){}
 
 class MoodAnalyzer(messageParameter: String) {
-  val message: String = messageParameter.asInstanceOf[String]
+  private val  message: String = messageParameter.asInstanceOf[String]
 
   def this() {
     this("SAD")
   }
 
 
-  def isEqual(secondObject: Any) =
+  override def equals(secondObject: Any) =
     secondObject.isInstanceOf[MoodAnalyzer] && secondObject.asInstanceOf[MoodAnalyzer].message == message
 
   def analyzeMood(): String = {
